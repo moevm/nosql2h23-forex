@@ -1,6 +1,9 @@
 # nosql_template
 
 
+## Hello world demo
+[Ссылка](https://drive.google.com/drive/folders/1CzjmR7G4wDPlhW5vfwzyfimZQExe9u9W?usp=drive_link)
+
 ## Предварительная проверка заданий
 
 <a href=" ./../../../actions/workflows/1_helloworld.yml" >![1. Установка и настройка выбранной БД + ЯП]( ./../../actions/workflows/1_helloworld.yml/badge.svg)</a>
