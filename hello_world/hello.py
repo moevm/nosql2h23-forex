@@ -1,5 +1,7 @@
 import pymongo
 
+from datetime import datetime
+
 # устанавливаем соединение с MongoDB
 db_client = pymongo.MongoClient("mongodb://localhost:27017/")
 
@@ -8,38 +10,6 @@ current_db = db_client["Forex"]
 
 # получаем колекцию из нашей БД, если её нет, то будет создана
 collection = current_db["pair"]
-
-usdrub = {
-        "name": "USDRUB",
-        "currency": "USD",
-        "toExchange": "RUB",
-        "first_obtained": "1989-12-21T00:00:00.000Z",
-        "last_obtained": "2029-12-21T00:00:00.000Z",
-        "import_date": "2019-12-21T00:00:00.000Z",
-        "values": [
-            {
-                "timestamp": "2019-10-21T00:00:00.000Z",
-                "open": 90,
-                "close": 100,
-                "min": 80,
-                "max": 100
-            },
-            {
-                "timestamp": "2019-11-21T00:00:00.000Z",
-                "open": 90,
-                "close": 100,
-                "min": 80,
-                "max": 100
-            },
-            {
-                "timestamp": "2019-12-21T00:00:00.000Z",
-                "open": 90,
-                "close": 100,
-                "min": 80,
-                "max": 100
-            }
-        ]
-    }
 
 eurrub = {
         "name": "EURRUB",
@@ -50,36 +20,35 @@ eurrub = {
         "import_date": "2019-12-21T00:00:00.000Z",
         "values": [
             {
-                "timestamp": "2019-12-21T00:00:00.000Z",
+                "timestamp": datetime(2019, 12, 21, 0, 0, 0),
                 "open": 190,
                 "close": 100,
                 "min": 180,
                 "max": 200
             },
             {
-                "timestamp": "2019-12-22T00:00:00.000Z",
-                "open": 190,
-                "close": 100,
-                "min": 180,
-                "max": 200
+                "timestamp": datetime(2019, 12, 21, 0, 1, 0),
+                "open": 150,
+                "close": 98,
+                "min": 88,
+                "max": 161
             },
             {
-                "timestamp": "2019-12-23T00:00:00.000Z",
-                "open": 190,
-                "close": 100,
-                "min": 180,
-                "max": 200
+                "timestamp": datetime(2019, 12, 21, 0, 2, 0),
+                "open": 164,
+                "close": 167,
+                "min": 140,
+                "max": 167
             }
         ]
     }
 
-# ins_result = collection.insert_one(usdrub)  # добавляет одну запись в коллекцию collection
-# ins_1_result = collection.insert_one(eurrub)  # добавляет одну запись в коллекцию collection
+ins_1_result = collection.insert_one(eurrub)  # добавляет одну запись в коллекцию collection
 
 ins_res = collection.update_one({"name": "EURRUB"},
                                 {"$push": {"values": {
-                                                    "timestamp": "2019-12-24T00:16:00.000Z",
-                                                    "open": 196,
+                                                    "timestamp": datetime(2019, 12, 21, 0, 3, 0),
+                                                    "open": 130,
                                                     "close": 120,
                                                     "min": 101,
                                                     "max": 199
