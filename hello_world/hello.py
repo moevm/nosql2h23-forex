@@ -15,9 +15,9 @@ eurrub = {
         "name": "EURRUB",
         "currency": "EUR",
         "toExchange": "RUB",
-        "first_obtained": "1989-12-21T00:00:00.000Z",
-        "last_obtained": "2029-12-21T00:00:00.000Z",
-        "import_date": "2019-12-21T00:00:00.000Z",
+        "first_obtained": datetime(1989, 12, 21, 0, 0, 0),
+        "last_obtained": datetime(2019, 12, 21, 0, 0, 0),
+        "import_date": datetime(2019, 12, 21, 0, 0, 0),
         "values": [
             {
                 "timestamp": datetime(2019, 12, 21, 0, 0, 0),
