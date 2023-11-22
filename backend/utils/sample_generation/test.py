@@ -1,4 +1,4 @@
-from sample_generation import create_pair, time_periods
+from backend.utils.sample_generation import create_pair, time_periods
 
 from datetime import datetime
 
