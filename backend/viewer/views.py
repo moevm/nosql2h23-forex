@@ -29,3 +29,19 @@ def get_pair_summary(request: HttpRequest, pair_name: str) -> JsonResponse:
         queries["summary"](pairs_collection, pair_name),
         safe=False  # Needed to send List of one object as JsonResponse.
     )
+
+
+@require_http_methods(["GET"])
+def get_point_info(
+        request: HttpRequest,
+        pair_name: str,
+        year: int,
+        month: int = 1,
+        day: int = 1,
+        hour: int = 0,
+        minute: int = 0
+) -> JsonResponse:
+
+    return JsonResponse(
+        queries["point"](pairs_collection, pair_name, [year, month, day, hour, minute])
+    )

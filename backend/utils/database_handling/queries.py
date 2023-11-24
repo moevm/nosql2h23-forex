@@ -40,7 +40,19 @@ def get_summary(source: Collection, name_code: str) -> List[Dict[str, str | date
     return list(source.aggregate(pipeline))
 
 
+def get_point(source: Collection, name_code: str, timestamp: List[int]) -> Dict[str, str | float]:
+
+    return source.find_one(
+        {
+            "pair_name": name_code,
+            "values.timestamp": datetime(*timestamp)
+        },
+        {"_id": 0, "values.$": 1}
+    )
+
+
 queries = {
     "info": get_info,
-    "summary": get_summary
+    "summary": get_summary,
+    "point": get_point
 }
