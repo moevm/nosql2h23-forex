@@ -1,34 +1,22 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpRequest, JsonResponse
+from django.views.decorators.http import require_http_methods
 
 from .models import pairs_collection
 
-from datetime import datetime
 
-from utils import create_pair, time_periods
+from utils import get_info
 
 # Create your views here.
 
 
-def index(request) -> HttpResponse:
-    return HttpResponse("<h1> App is a go! </h1>")
+def index(request) -> JsonResponse:
+    return JsonResponse("<h1> App is a go! </h1>")
 
 
-def add_sample(request) -> HttpResponse:
+@require_http_methods(["GET"])
+def get_pair_info(request: HttpRequest, pair_name: str) -> JsonResponse:
 
-    pairs_collection.insert_one(
-        create_pair(
-            "USDRUB",
-            (datetime(2011, 1, 1), datetime(2021, 1, 1)),
-            time_periods["H4"],
-            60,
-            120
-        )
+    return JsonResponse(
+        get_info(pairs_collection, pair_name)
     )
-
-    return HttpResponse("Currency pair 'USDRUB' added!")
-
-
-def show_all(request) -> HttpResponse:
-
-    return HttpResponse(pairs_collection.find())
