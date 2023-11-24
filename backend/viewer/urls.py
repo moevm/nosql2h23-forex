@@ -5,5 +5,6 @@ from . import views
 
 urlpatterns = [
     path("", views.index),
-    path("show/<str:pair_name>", views.get_pair_info)
+    path("show/<str:pair_name>", views.get_pair_info),
+    path("archive/<str:pair_name>", views.get_pair_summary)
 ]

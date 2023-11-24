@@ -1,10 +1,10 @@
 from .database_handling import database
 from .sample_generation import create_pair, time_periods
-from .database_handling import get_info
+from .database_handling import queries
 
 __all__ = [
     "database",
-    "get_info",
+    "queries",
     "create_pair",
     "time_periods"
 ]
