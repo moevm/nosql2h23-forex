@@ -24,11 +24,11 @@ time_periods = {
 def _create_header(name: str, period: Tuple[datetime, datetime]) -> Dict[str, str | datetime]:
 
     return {
-        "pair_name": name,
-        "currency": name[:3],
-        "exchanged_to": name[3:],
-        "first_data_obtained": period[0],
-        "last_data_obtained": period[1],
+        "code": name,
+        "fromExchange": name[:3],
+        "toExchange": name[3:],
+        "first_record_date": period[0],
+        "last_record_date": period[1],
         "import_date": datetime.now()
     }
 

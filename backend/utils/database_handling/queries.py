@@ -13,23 +13,23 @@ def get_periods() -> Dict[str, List[str]]:
 
 def get_info(source: Collection, name_code: str) -> Dict[str, str | datetime]:
 
-    return source.find_one({"pair_name": name_code}, {"_id": 0})
+    return source.find_one({"code": name_code}, {"_id": 0})
 
 
 def get_summary(source: Collection, name_code: str) -> List[Dict[str, str | datetime | int]]:
 
     pipeline = [
-        {"$match": {"pair_name": name_code}},
+        {"$match": {"code": name_code}},
         {"$unwind": "$values"},
         {"$group": {
             "_id": 0,
-            "code": {"$first": "$pair_name"},
-            "currency": {"$first": "$currency"},
-            "exchanged_to": {"$first": "$exchanged_to"},
+            "code": {"$first": "$code"},
+            "fromExchange": {"$first": "$fromExchange"},
+            "toExchange": {"$first": "$toExchange"},
             "import_date": {"$first": "$import_date"},
             "exchange_rate_records": {"$sum": 1},
-            "first_record": {"$first": "$first_data_obtained"},
-            "last_record": {"$first": "$last_data_obtained"}
+            "first_record_date": {"$first": "$first_record_date"},
+            "last_record_date": {"$first": "$last_record_date"}
         }}
     ]
 
@@ -42,7 +42,7 @@ def get_point(source: Collection, name_code: str, timestamp: List[int]) -> Dict[
 
     return source.find_one(
         {
-            "pair_name": name_code,
+            "code": name_code,
             "values.timestamp": datetime(*timestamp)
         },
         {"_id": 0, "values.$": 1}
