@@ -1,25 +1,19 @@
 from ..sample_generation import create_pair, time_periods
-from .db_connection import database, collection_name, pairs_collection
+from .db_connection import db_init, check_db, check_collection, db_collection
 
 from datetime import datetime
-from pymongo.errors import CollectionInvalid
 
 import numpy as np
 
 
 def db_validate() -> bool:
 
-    try:
-        database.validate_collection(collection_name)
-
-        return True
-
-    except CollectionInvalid:
-
-        return False
+    return check_db() and check_collection()
 
 
-def db_init() -> None:
+def create_db() -> None:
+
+    pairs_collection = db_collection()
 
     pairs = {
         "USDRUB": (datetime(2010, 1, 1), datetime(2010, 4, 1)),

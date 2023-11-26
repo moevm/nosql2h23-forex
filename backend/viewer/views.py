@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 
-from utils import db_init, db_validate, pairs_collection, queries
+from utils import create_db, db_validate, db_collection, queries
 
 from pymongo.errors import DocumentTooLarge
 
@@ -20,7 +20,7 @@ def index(request) -> JsonResponse:
         )
 
     try:
-        db_init()
+        create_db()
 
         return JsonResponse(
             {"DB is up": True,
@@ -46,7 +46,7 @@ def get_discretization_periods(request: HttpRequest) -> JsonResponse:
 def get_pair_info(request: HttpRequest, pair_name: str) -> JsonResponse:
 
     return JsonResponse(
-        queries["info"](pairs_collection, pair_name)
+        queries["info"](db_collection(), pair_name)
     )
 
 
@@ -54,7 +54,7 @@ def get_pair_info(request: HttpRequest, pair_name: str) -> JsonResponse:
 def get_pair_summary(request: HttpRequest, pair_name: str) -> JsonResponse:
 
     return JsonResponse(
-        queries["summary"](pairs_collection, pair_name),
+        queries["summary"](db_collection(), pair_name),
         safe=False  # Needed to send List of one object as JsonResponse.
     )
 
@@ -71,5 +71,5 @@ def get_point_info(
 ) -> JsonResponse:
 
     return JsonResponse(
-        queries["point"](pairs_collection, pair_name, [year, month, day, hour, minute])
+        queries["point"](db_collection(), pair_name, [year, month, day, hour, minute])
     )

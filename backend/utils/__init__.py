@@ -1,11 +1,11 @@
-from .database_handling import db_init, db_validate, pairs_collection
+from .database_handling import create_db, db_validate, db_collection
 from .sample_generation import time_periods
 from .database_handling import queries
 
 __all__ = [
-    "db_init",
+    "create_db",
     "db_validate",
-    "pairs_collection",
+    "db_collection",
     "queries",
     "time_periods"
 ]
