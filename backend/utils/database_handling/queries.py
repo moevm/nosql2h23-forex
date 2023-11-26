@@ -1,16 +1,14 @@
-from pymongo.cursor import Cursor
 from pymongo.collection import Collection
 
+from ..sample_generation import time_periods
 
 from typing import Dict, List
 from datetime import datetime
 
 
-def serialise_cursor(data: Cursor) -> List[Dict[str, str | datetime | List[Dict[str, datetime | float]]]]:
+def get_periods() -> Dict[str, List[str]]:
 
-    serialized = list(data)
-
-    return serialized
+    return {"available": list(time_periods.keys())}
 
 
 def get_info(source: Collection, name_code: str) -> Dict[str, str | datetime]:
@@ -52,6 +50,7 @@ def get_point(source: Collection, name_code: str, timestamp: List[int]) -> Dict[
 
 
 queries = {
+    "periods": get_periods,
     "info": get_info,
     "summary": get_summary,
     "point": get_point

@@ -1,9 +1,9 @@
-from .database_handling import database
+from .database_handling import pairs_collection
 from .sample_generation import create_pair, time_periods
 from .database_handling import queries
 
 __all__ = [
-    "database",
+    "pairs_collection",
     "queries",
     "create_pair",
     "time_periods"

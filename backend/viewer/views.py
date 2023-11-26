@@ -2,17 +2,23 @@ from django.shortcuts import render
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 
-from .models import pairs_collection
+from utils import pairs_collection, queries
 
-
-from utils import queries
 
 # Create your views here.
 
 
 def index(request) -> JsonResponse:
-    return JsonResponse("<h1> App is a go! </h1>")
 
+    return JsonResponse("<h1> App is a go! </h1>", status=500, safe=False)
+
+
+@require_http_methods(["GET"])
+def get_discretization_periods(request: HttpRequest) -> JsonResponse:
+
+    return JsonResponse(
+        queries["periods"]()
+    )
 
 @require_http_methods(["GET"])
 def get_pair_info(request: HttpRequest, pair_name: str) -> JsonResponse:
