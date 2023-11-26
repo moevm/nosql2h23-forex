@@ -81,3 +81,16 @@ def get_point_info(
     return JsonResponse(
         queries["point"](db_collection(), pair_name, [year, month, day, hour, minute])
     )
+
+
+@require_http_methods(["GET"])
+def build_graph(request: HttpRequest,
+                pair_name: str,
+                start_date: str,
+                end_date: str,
+                frequency: str) -> JsonResponse:
+
+    return JsonResponse(
+        queries["graph"](db_collection(), pair_name, start_date, end_date, frequency),
+        safe=False
+    )
