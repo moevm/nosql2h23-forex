@@ -22,6 +22,11 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.currencyService.availableCurrencyPairsSubject.subscribe(console.log)
+
+    this.currencyService.getAvailableCurrencyPairCodes()
+
     this.currencyService.currencyPairSubject.subscribe((data) => {
       this.currencyPairDataset = data
     })

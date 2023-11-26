@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
 
-  BACKEND_DOMAIN: 'http://127.0.0.1:8000/viewer/',
+  BACKEND_DOMAIN: 'http://localhost:8000/viewer/',
 
   URLS: {
     getCurrencyPairInfo(code: string) {
