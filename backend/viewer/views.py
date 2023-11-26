@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 
-from utils import pairs_collection, queries
+from utils import db_init, db_validate, pairs_collection, queries
+
+from pymongo.errors import DocumentTooLarge
 
 
 # Create your views here.
@@ -10,7 +12,27 @@ from utils import pairs_collection, queries
 
 def index(request) -> JsonResponse:
 
-    return JsonResponse("<h1> App is a go! </h1>", status=500, safe=False)
+    if db_validate():
+
+        return JsonResponse(
+            {"DB is up": True,
+             "Generated": False}
+        )
+
+    try:
+        db_init()
+
+        return JsonResponse(
+            {"DB is up": True,
+             "Generated": True}
+        )
+
+    except DocumentTooLarge:
+
+        return JsonResponse(
+            {"DB is up": False,
+             "Generated": False}
+        )
 
 
 @require_http_methods(["GET"])

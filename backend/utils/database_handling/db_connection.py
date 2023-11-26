@@ -7,4 +7,6 @@ client = MongoClient(connection_url)
 
 database = client["Forex"]
 
-pairs_collection = database["Currency_pairs"]
+collection_name = "Currency_pairs"
+
+pairs_collection = database[collection_name]
