@@ -15,6 +15,7 @@ import { ChipsModule } from 'primeng/chips'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ChartModule } from 'primeng/chart'
 import { ListboxModule } from 'primeng/listbox'
+import { CalendarModule } from 'primeng/calendar'
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ListboxModule } from 'primeng/listbox'
     ChartModule,
     ListboxModule,
     FormsModule,
+    CalendarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

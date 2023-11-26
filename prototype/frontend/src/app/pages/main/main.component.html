@@ -1,3 +1,9 @@
+<div class="card flex justify-content-center">
+  <form [formGroup]="dateFormGroup">
+    <p-calendar formControlName="dateFrom"></p-calendar>
+    <p-calendar formControlName="dateTo"></p-calendar>
+  </form>
+</div>
 <div class="chart card">
   <p-chart type="line" [data]="data" [options]="options" height="50vh" width="80vw"></p-chart>
 </div>

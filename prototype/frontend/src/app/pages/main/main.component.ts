@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { CurrencyService } from '../../services/currency.service'
 import { CurrencyPair } from '../../../models/currency-pair.model'
+import { FormControl, FormGroup } from '@angular/forms'
 
 @Component({
   selector: 'app-main',
@@ -12,6 +13,10 @@ export class MainComponent implements OnInit {
 
   data: any
   options: any
+  dateFormGroup = new FormGroup({
+    dateFrom: new FormControl<Date | null>(null),
+    dateTo: new FormControl<Date | null>(null),
+  })
 
   constructor(private currencyService: CurrencyService) {
   }
