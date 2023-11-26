@@ -1,0 +1,13 @@
+a * {
+  text-decoration: none;
+  margin: 1vw;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+}
+
+svg:hover {
+  transform: scale(1.1);
+}
