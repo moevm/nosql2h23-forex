@@ -6,12 +6,10 @@ describe('SearchDialogComponent', () => {
   let component: SearchDialogComponent
   let fixture: ComponentFixture<SearchDialogComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SearchDialogComponent],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [SearchDialogComponent],
     })
-      .compileComponents()
-
     fixture = TestBed.createComponent(SearchDialogComponent)
     component = fixture.componentInstance
     fixture.detectChanges()

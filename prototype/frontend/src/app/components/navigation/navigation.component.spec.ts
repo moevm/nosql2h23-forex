@@ -6,12 +6,10 @@ describe('NavigationComponent', () => {
   let component: NavigationComponent
   let fixture: ComponentFixture<NavigationComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [NavigationComponent],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [NavigationComponent],
     })
-      .compileComponents()
-
     fixture = TestBed.createComponent(NavigationComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
