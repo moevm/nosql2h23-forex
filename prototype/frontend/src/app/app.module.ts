@@ -11,6 +11,10 @@ import { MainComponent } from './pages/main/main.component'
 import { ButtonModule } from 'primeng/button'
 import { DialogModule } from 'primeng/dialog'
 import { CardModule } from 'primeng/card'
+import { ChipsModule } from 'primeng/chips'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { ChartModule } from 'primeng/chart'
+import { ListboxModule } from 'primeng/listbox'
 
 @NgModule({
   declarations: [
@@ -27,6 +31,11 @@ import { CardModule } from 'primeng/card'
     DialogModule,
     CardModule,
     BrowserAnimationsModule,
+    ChipsModule,
+    ReactiveFormsModule,
+    ChartModule,
+    ListboxModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
