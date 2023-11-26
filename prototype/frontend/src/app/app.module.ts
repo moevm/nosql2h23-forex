@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ChartModule } from 'primeng/chart'
 import { ListboxModule } from 'primeng/listbox'
 import { CalendarModule } from 'primeng/calendar'
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -38,6 +39,8 @@ import { CalendarModule } from 'primeng/calendar'
     ListboxModule,
     FormsModule,
     CalendarModule,
+    BrowserModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -15,6 +15,7 @@ export class CurrencyService {
   availableCurrencyPairsSubject: BehaviorSubject<string [] | null> = new BehaviorSubject<string[] | null>(null)
 
   constructor(private httpService: HttpClient) {
+    this.httpService.get(environment.URLS.getAvailableCurrencyPairCodes()).subscribe(console.log)
   }
 
   getCurrencyPairInfo(code: string) {
