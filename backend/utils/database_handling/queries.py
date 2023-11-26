@@ -6,6 +6,17 @@ from typing import Dict, List
 from datetime import datetime
 
 
+def get_codes(source: Collection) -> Dict[str, List[str]]:
+
+    pipeline = [
+        {"$unwind": "$code"},
+        {"$group": {"_id": "$code"}
+         }
+    ]
+
+    return {"available": list(source.aggregate(pipeline))}
+
+
 def get_periods() -> Dict[str, List[str]]:
 
     return {"available": list(time_periods.keys())}
@@ -50,6 +61,7 @@ def get_point(source: Collection, name_code: str, timestamp: List[int]) -> Dict[
 
 
 queries = {
+    "codes": get_codes,
     "periods": get_periods,
     "info": get_info,
     "summary": get_summary,

@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path("", views.index),
+    path("codes/", views.get_currency_pair_codes),
     path("show/<str:pair_name>", views.get_pair_info),
     path("periods/", views.get_discretization_periods),
     path("archive/<str:pair_name>", views.get_pair_summary),

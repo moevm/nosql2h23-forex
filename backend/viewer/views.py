@@ -36,6 +36,14 @@ def index(request) -> JsonResponse:
 
 
 @require_http_methods(["GET"])
+def get_currency_pair_codes(request: HttpRequest) -> JsonResponse:
+
+    return JsonResponse(
+        queries["codes"](db_collection())
+    )
+
+
+@require_http_methods(["GET"])
 def get_discretization_periods(request: HttpRequest) -> JsonResponse:
 
     return JsonResponse(
