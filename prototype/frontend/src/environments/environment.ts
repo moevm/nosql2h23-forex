@@ -11,7 +11,7 @@ export const environment = {
       return `${environment.BACKEND_DOMAIN}archive/${code.toUpperCase()}`
     },
     getAvailableCurrencyPairCodes() {
-      return `${environment.BACKEND_DOMAIN}/codes`
+      return `${environment.BACKEND_DOMAIN}codes`
     },
   },
 }
