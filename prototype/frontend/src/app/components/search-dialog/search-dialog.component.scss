@@ -1,6 +1,6 @@
 a * {
-  padding: 1vw;
   text-decoration: none;
+  margin: 1vw;
 
   &:hover {
     cursor: pointer;
@@ -10,4 +10,9 @@ a * {
 
 svg:hover {
   transform: scale(1.1);
+}
+
+p-dialog * {
+  height: 50vh;
+  width: 25vw;
 }

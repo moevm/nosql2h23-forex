@@ -1,38 +1,32 @@
-import { Component, Inject } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { TuiDialogFormService, TuiInputModule } from '@taiga-ui/kit'
-import { TuiButtonModule, TuiDialogService } from '@taiga-ui/core'
-import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus'
-import { FormsModule } from '@angular/forms'
+import { Component, OnInit } from '@angular/core'
+
+interface City {
+  name: string,
+  code: string
+}
 
 @Component({
   selector: 'app-search-dialog',
-  standalone: true,
-  imports: [CommonModule, TuiButtonModule, TuiInputModule, FormsModule],
   templateUrl: './search-dialog.component.html',
-  styleUrl: './search-dialog.component.scss',
-  providers: [TuiDialogFormService],
+  styleUrls: ['./search-dialog.component.scss'],
 })
-export class SearchDialogComponent {
-  searchSymbols = ''
+export class SearchDialogComponent implements OnInit {
+  visible: boolean = false
+  cities!: City[]
 
-  constructor(
-    @Inject(TuiDialogFormService) private readonly dialogForm: TuiDialogFormService,
-    @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
-  ) {
+  selectedCity!: City
+
+  showDialog() {
+    this.visible = true
   }
 
-  onModelChange(value: string): void {
-    this.searchSymbols = value
-    this.dialogForm.markAsDirty()
-  }
-
-  onClick(content: PolymorpheusContent): void {
-    this.dialogs.open(content).subscribe({
-      complete: () => {
-        this.searchSymbols = ''
-        this.dialogForm.markAsPristine()
-      },
-    })
+  ngOnInit() {
+    this.cities = [
+      { name: 'New York', code: 'NY' },
+      { name: 'Rome', code: 'RM' },
+      { name: 'London', code: 'LDN' },
+      { name: 'Istanbul', code: 'IST' },
+      { name: 'Paris', code: 'PRS' },
+    ]
   }
 }

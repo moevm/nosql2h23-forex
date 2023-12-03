@@ -15,11 +15,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/frontend",
             "index": "src/index.html",
-            "browser": "src/main.ts",
+            "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -27,20 +27,14 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "node_modules/@taiga-ui/icons/src",
-                "output": "assets/taiga-ui/icons"
-              }
+              "src/assets"
             ],
             "styles": [
-              "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
-              "node_modules/@taiga-ui/core/styles/taiga-ui-fonts.less",
-              "node_modules/@taiga-ui/styles/taiga-ui-global.less",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/chart.js/dist/chart.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -59,9 +53,18 @@
               "outputHashing": "all"
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
+              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -70,10 +73,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "frontend:build:production"
+              "browserTarget": "frontend:build:production",
+              "proxyConfig": "./proxy.conf.json"
             },
             "development": {
-              "buildTarget": "frontend:build:development"
+              "browserTarget": "frontend:build:development",
+              "proxyConfig": "./proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +86,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "frontend:build"
+            "browserTarget": "frontend:build"
           }
         },
         "test": {
@@ -108,6 +113,6 @@
     }
   },
   "cli": {
-    "analytics": "cf6efb20-f464-4bae-8f6c-ea817cd20911"
+    "analytics": "209ebc88-78fa-49bb-a3c0-3ea575df6dde"
   }
 }
