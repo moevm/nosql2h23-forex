@@ -27,7 +27,8 @@
   <p-dialog header="Search symbol" [(visible)]="visible" [modal]="true" [draggable]="false"
             [resizable]="false">
     <div class="card flex justify-content-center">
-      <p-listbox [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" [filter]="true"
+      <p-listbox class="currency-codes-list" [options]="availableCurrencyPairCodes"
+                 [(ngModel)]="selectedCurrencyPairCode" optionLabel="_id" [filter]="true"
                  [listStyle]="{'max-height': '500px'}"></p-listbox>
     </div>
   </p-dialog>

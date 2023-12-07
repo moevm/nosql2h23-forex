@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core'
+import { Code } from '../../../models/contract'
+import { CurrencyService } from '../../services/currency.service'
+import { asyncScheduler, BehaviorSubject, debounceTime, fromEvent } from 'rxjs'
 
-interface City {
-  name: string,
-  code: string
-}
 
 @Component({
   selector: 'app-search-dialog',
@@ -11,22 +10,48 @@ interface City {
   styleUrls: ['./search-dialog.component.scss'],
 })
 export class SearchDialogComponent implements OnInit {
+  visibleSubject: BehaviorSubject<boolean> = new BehaviorSubject(false)
   visible: boolean = false
-  cities!: City[]
+  availableCurrencyPairCodes: Code[]
 
-  selectedCity!: City
+  selectedCurrencyPairCode: Code
+
+  constructor(private currencyService: CurrencyService) {
+
+    this.visibleSubject.subscribe(value => this.visible = value)
+
+    //timer(0, 1000).subscribe(() => console.log(this.selectedCurrencyPairCode))
+  }
 
   showDialog() {
-    this.visible = true
+    this.visibleSubject.next(true)
   }
 
   ngOnInit() {
-    this.cities = [
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' },
-    ]
+    this.currencyService.getAvailableCurrencyPairCodes()
+
+    this.currencyService.availableCurrencyPairsSubject.subscribe(currencyCodes => {
+      this.availableCurrencyPairCodes = currencyCodes.available
+
+      console.log(currencyCodes.available)
+    })
+
+    this.visibleSubject.pipe(debounceTime(0, asyncScheduler)).subscribe((isVisible) => {
+      if (isVisible) {
+        const listElement = document.querySelector('.currency-codes-list li') as Element
+
+        console.log(listElement)
+
+        const clickInCodesList = fromEvent(listElement, 'click')
+
+        clickInCodesList.subscribe(() => {
+          this.currencyService.getCurrencyPairInfo(this.selectedCurrencyPairCode._id)
+          this.visibleSubject.next(false)
+        })
+      }
+    })
+
+    //console.log(this.availableCurrencyPairCodes)
   }
+
 }

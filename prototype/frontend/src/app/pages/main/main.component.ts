@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { CurrencyService } from '../../services/currency.service'
-import { CurrencyPair } from '../../../models/currency-pair.model'
+import { CurrencyPair } from '../../../models/contract'
 import { FormControl, FormGroup } from '@angular/forms'
 
 @Component({
@@ -23,115 +23,92 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.currencyService.availableCurrencyPairsSubject.subscribe(console.log)
+    this.currencyService.currencyPairSubject.subscribe(console.log)
 
-    this.currencyService.getAvailableCurrencyPairCodes()
+    //this.currencyService.getCurrencyPairInfo('USDRUB')
+    //this.currencyService.availableCurrencyPairsSubject.subscribe(console.log)
+
 
     this.currencyService.currencyPairSubject.subscribe((data) => {
       this.currencyPairDataset = data
-    })
 
-    const documentStyle = getComputedStyle(document.documentElement)
-    const textColor = documentStyle.getPropertyValue('--text-color')
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary')
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border')
+      console.log('change')
 
-    this.data = {
-      labels: [...this.currencyPairDataset.values.map(value => value.timestamp.toDateString())],
-      datasets: [
-        {
-          label: 'Open',
-          data: [...this.currencyPairDataset.values.map(value => value.open)],
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          tension: 0.4,
-        },
-        {
-          label: 'Close',
-          data: [...this.currencyPairDataset.values.map(value => value.close)],
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--red-500'),
-          tension: 0.4,
-        },
-        {
-          label: 'Min',
-          data: [...this.currencyPairDataset.values.map(value => value.min)],
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--purple-500'),
-          tension: 0.4,
-        },
-        {
-          label: 'Max',
-          data: [...this.currencyPairDataset.values.map(value => value.max)],
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--green-500'),
-          tension: 0.4,
-        },
-        //{
-        //  label: 'First Dataset',
-        //  data: [...this.currencyPairDataset.values.map(value => value.open)],
-        //  fill: false,
-        //  borderColor: documentStyle.getPropertyValue('--blue-500'),
-        //  tension: 0.4,
-        //},
-        //{
-        //  label: 'First Dataset',
-        //  data: [...this.currencyPairDataset.values.map(value => value.open)],
-        //  fill: false,
-        //  borderColor: documentStyle.getPropertyValue('--blue-500'),
-        //  tension: 0.4,
-        //},
-        //{
-        //  label: 'First Dataset',
-        //  data: [...this.currencyPairDataset.values.map(value => value.close)],
-        //  fill: false,
-        //  borderColor: documentStyle.getPropertyValue('--blue-500'),
-        //  tension: 0.4,
-        //},
-        //{
-        //  label: 'Second Dataset',
-        //  data: [...this.currencyPairDataset.values.map(value => value.close)],
-        //  fill: false,
-        //  borderColor: documentStyle.getPropertyValue('--pink-500'),
-        //  tension: 0.4,
-        //},
-      ],
-    }
 
-    this.options = {
-      maintainAspectRatio: false,
-      aspectRatio: 0.6,
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor,
+      const documentStyle = getComputedStyle(document.documentElement)
+      const textColor = documentStyle.getPropertyValue('--text-color')
+      const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary')
+      const surfaceBorder = documentStyle.getPropertyValue('--surface-border')
+
+      this.data = {
+        labels: [...this.currencyPairDataset.values.map(value => new Date(value.timestamp))],
+        datasets: [
+          {
+            label: 'Open',
+            data: [...this.currencyPairDataset.values.map(value => value.open)],
+            fill: false,
+            borderColor: documentStyle.getPropertyValue('--blue-500'),
+            tension: 0.4,
           },
-        },
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: textColorSecondary,
+          {
+            label: 'Close',
+            data: [...this.currencyPairDataset.values.map(value => value.close)],
+            fill: false,
+            borderColor: documentStyle.getPropertyValue('--red-500'),
+            tension: 0.4,
           },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
+          {
+            label: 'Min',
+            data: [...this.currencyPairDataset.values.map(value => value.min)],
+            fill: false,
+            borderColor: documentStyle.getPropertyValue('--purple-500'),
+            tension: 0.4,
           },
-        },
-        y: {
-          ticks: {
-            color: textColorSecondary,
-            callback: (label: number) => {
-              return label
+          {
+            label: 'Max',
+            data: [...this.currencyPairDataset.values.map(value => value.max)],
+            fill: false,
+            borderColor: documentStyle.getPropertyValue('--green-500'),
+            tension: 0.4,
+          },
+        ],
+      }
+
+      this.options = {
+        maintainAspectRatio: false,
+        aspectRatio: 0.6,
+        plugins: {
+          legend: {
+            labels: {
+              color: textColor,
             },
           },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: textColorSecondary,
+            },
+            grid: {
+              color: surfaceBorder,
+              drawBorder: false,
+            },
+          },
+          y: {
+            ticks: {
+              color: textColorSecondary,
+              callback: (label: number) => {
+                return label
+              },
+            },
+            grid: {
+              color: surfaceBorder,
+              drawBorder: false,
+            },
           },
         },
-      },
-    }
+      }
+    })
   }
 
 
