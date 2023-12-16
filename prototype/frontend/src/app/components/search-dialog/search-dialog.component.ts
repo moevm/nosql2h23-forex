@@ -17,10 +17,7 @@ export class SearchDialogComponent implements OnInit {
   selectedCurrencyPairCode: Code
 
   constructor(private currencyService: CurrencyService) {
-
     this.visibleSubject.subscribe(value => this.visible = value)
-
-    //timer(0, 1000).subscribe(() => console.log(this.selectedCurrencyPairCode))
   }
 
   showDialog() {
@@ -32,26 +29,21 @@ export class SearchDialogComponent implements OnInit {
 
     this.currencyService.availableCurrencyPairsSubject.subscribe(currencyCodes => {
       this.availableCurrencyPairCodes = currencyCodes.available
-
-      console.log(currencyCodes.available)
     })
 
     this.visibleSubject.pipe(debounceTime(0, asyncScheduler)).subscribe((isVisible) => {
       if (isVisible) {
         const listElement = document.querySelector('.currency-codes-list li') as Element
 
-        console.log(listElement)
-
         const clickInCodesList = fromEvent(listElement, 'click')
 
         clickInCodesList.subscribe(() => {
-          this.currencyService.getCurrencyPairInfo(this.selectedCurrencyPairCode._id)
+          this.currencyService.setCode(this.selectedCurrencyPairCode._id)
+          this.currencyService.getCurrencyPairGraph()
           this.visibleSubject.next(false)
         })
       }
     })
-
-    //console.log(this.availableCurrencyPairCodes)
   }
 
 }

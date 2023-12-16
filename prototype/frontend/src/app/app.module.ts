@@ -17,6 +17,8 @@ import { ChartModule } from 'primeng/chart'
 import { ListboxModule } from 'primeng/listbox'
 import { CalendarModule } from 'primeng/calendar'
 import { HttpClientModule } from '@angular/common/http'
+import { DatePipe } from '@angular/common'
+import { SelectButtonModule } from 'primeng/selectbutton'
 
 @NgModule({
   declarations: [
@@ -41,8 +43,9 @@ import { HttpClientModule } from '@angular/common/http'
     CalendarModule,
     BrowserModule,
     HttpClientModule,
+    SelectButtonModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

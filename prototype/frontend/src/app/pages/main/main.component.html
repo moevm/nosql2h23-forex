@@ -1,8 +1,27 @@
-<div class="card flex justify-content-center">
-  <form [formGroup]="dateFormGroup">
-    <p-calendar formControlName="dateFrom"></p-calendar>
-    <p-calendar formControlName="dateTo"></p-calendar>
-  </form>
+<div class="upper-menu">
+  <div class="card flex justify-content-center date-range">
+    <div>
+      Selected Pair: {{selectedCode}}
+    </div>
+    <form [formGroup]="dateFormGroup">
+      <div>
+        Date From:
+        <p-calendar [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true"
+                    formControlName="dateFrom"></p-calendar>
+      </div>
+      <div>
+        Date To:
+        <p-calendar [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true"
+                    formControlName="dateTo"></p-calendar>
+      </div>
+    </form>
+  </div>
+  <div>
+    <div class="card flex justify-content-end select-period">
+      <p-selectButton [options]="availablePeriods" [(ngModel)]="selectedFrequency" [multiple]="false"
+                      optionLabel="value" optionValue="value"></p-selectButton>
+    </div>
+  </div>
 </div>
 <div class="chart card">
   <p-chart type="line" [data]="data" [options]="options" height="50vh" width="80vw"></p-chart>

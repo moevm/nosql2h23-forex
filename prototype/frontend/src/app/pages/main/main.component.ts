@@ -1,72 +1,99 @@
-import { Component, OnInit } from '@angular/core'
+import { AfterViewInit, Component, OnInit } from '@angular/core'
 import { CurrencyService } from '../../services/currency.service'
-import { CurrencyPair } from '../../../models/contract'
+import { GraphData } from '../../../models/contract'
 import { FormControl, FormGroup } from '@angular/forms'
+import { DatePipe } from '@angular/common'
+import { fromEvent } from 'rxjs'
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent implements OnInit {
-  currencyPairDataset: CurrencyPair
+export class MainComponent implements OnInit, AfterViewInit {
+  currencyPairDataset: GraphData[]
+
+  minDate: Date = new Date('2010-01-01T00:00:00')
+  maxDate: Date = new Date('2010-04-01T00:00:00')
+
+  selectedCode: string
+  selectedFrequency: string
+
+  availablePeriods: {
+    value: string
+  }[]
 
   data: any
   options: any
   dateFormGroup = new FormGroup({
-    dateFrom: new FormControl<Date | null>(null),
-    dateTo: new FormControl<Date | null>(null),
+    dateFrom: new FormControl<Date>(new Date('2010-02-02T00:00:00')),
+    dateTo: new FormControl<Date>(new Date('2010-03-02T00:00:00')),
   })
 
-  constructor(private currencyService: CurrencyService) {
+  constructor(private currencyService: CurrencyService, public datePipe: DatePipe) {
+    this.currencyService.availablePeriods.subscribe(periods => {
+      this.availablePeriods = periods.available.map(str => ({
+        value: str,
+      }))
+    })
+
+    this.currencyService.getAvailablePeriods()
+
+
+    this.currencyService.currencyPairSubject.subscribe(() => {
+      this.selectedCode = this.currencyService.code.toUpperCase()
+    })
+
+    this.currencyService.setDateRange(this.dateFormGroup.value.dateFrom as Date, this.dateFormGroup.value.dateTo as Date)
+    this.currencyService.setFrequency('D1')
+    this.currencyService.setCode('usdrub')
+    this.currencyService.getCurrencyPairGraph()
+
+
+    this.dateFormGroup.valueChanges.subscribe(() => {
+      this.currencyService.setDateRange(this.dateFormGroup.value.dateFrom as Date, this.dateFormGroup.value.dateTo as Date)
+      this.currencyService.getCurrencyPairGraph()
+    })
+
   }
 
   ngOnInit(): void {
-
     this.currencyService.currencyPairSubject.subscribe(console.log)
-
-    //this.currencyService.getCurrencyPairInfo('USDRUB')
-    //this.currencyService.availableCurrencyPairsSubject.subscribe(console.log)
-
 
     this.currencyService.currencyPairSubject.subscribe((data) => {
       this.currencyPairDataset = data
-
-      console.log('change')
-
-
       const documentStyle = getComputedStyle(document.documentElement)
       const textColor = documentStyle.getPropertyValue('--text-color')
       const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary')
       const surfaceBorder = documentStyle.getPropertyValue('--surface-border')
 
       this.data = {
-        labels: [...this.currencyPairDataset.values.map(value => new Date(value.timestamp))],
+        labels: [...this.currencyPairDataset.map(value => this.datePipe.transform(new Date(value._id), 'yyyy-MM-dd, hh:mm:ss'))],
         datasets: [
           {
             label: 'Open',
-            data: [...this.currencyPairDataset.values.map(value => value.open)],
+            data: [...this.currencyPairDataset.map(value => value.open)],
             fill: false,
             borderColor: documentStyle.getPropertyValue('--blue-500'),
             tension: 0.4,
           },
           {
             label: 'Close',
-            data: [...this.currencyPairDataset.values.map(value => value.close)],
+            data: [...this.currencyPairDataset.map(value => value.close)],
             fill: false,
             borderColor: documentStyle.getPropertyValue('--red-500'),
             tension: 0.4,
           },
           {
             label: 'Min',
-            data: [...this.currencyPairDataset.values.map(value => value.min)],
+            data: [...this.currencyPairDataset.map(value => value.min)],
             fill: false,
             borderColor: documentStyle.getPropertyValue('--purple-500'),
             tension: 0.4,
           },
           {
             label: 'Max',
-            data: [...this.currencyPairDataset.values.map(value => value.max)],
+            data: [...this.currencyPairDataset.map(value => value.max)],
             fill: false,
             borderColor: documentStyle.getPropertyValue('--green-500'),
             tension: 0.4,
@@ -108,6 +135,17 @@ export class MainComponent implements OnInit {
           },
         },
       }
+    })
+  }
+
+  ngAfterViewInit(): void {
+    const selectElement = document.querySelector('p-selectbutton') as Element
+
+    const clickInSelectElement = fromEvent(selectElement, 'click')
+
+    clickInSelectElement.subscribe(() => {
+      this.currencyService.setFrequency(this.selectedFrequency)
+      this.currencyService.getCurrencyPairGraph()
     })
   }
 

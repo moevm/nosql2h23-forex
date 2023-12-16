@@ -1,7 +1,6 @@
-
 // ['/'] Database status and additional info
 export type DBStatus = {
-  // Status, signaling if the Database is running and ready to handle requests. 
+  // Status, signaling if the Database is running and ready to handle requests.
   DB_is_up: boolean;   // true
   // Status, signaling if Database was created on server startup.
   Generated: boolean;  // false
@@ -13,11 +12,15 @@ export type Tickers = {
   available: Code[];   // {"_id": "USDRUB"}
 }
 
+export type Periods = {
+  available: string[]
+}
+
 export type Code = {
   _id: string;         // "USDRUB"
 }
 
-// ['show/'] Untouched document from DB. 
+// ['show/'] Untouched document from DB.
 export type CurrencyPair = {
   code: string;               // "USDRUB"
   fromExchange: string;       // "USD"
@@ -48,7 +51,7 @@ export type ArchiveRecord = {
   fromExchange: string;           // "USD"
   toExchange: string;             // "RUB"
   import_date: string;            // "2023-11-26T19:34:47.452"
-  exchange_rate_records : number; // 129601
+  exchange_rate_records: number; // 129601
   first_record_date: string;      // "2010-01-01T00:00:00"
   last_record_date: string;       // "2010-12-12T00:00:00"
 }
