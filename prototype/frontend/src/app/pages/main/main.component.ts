@@ -39,7 +39,6 @@ export class MainComponent implements OnInit, AfterViewInit {
 
     this.currencyService.getAvailablePeriods()
 
-
     this.currencyService.currencyPairSubject.subscribe(() => {
       this.selectedCode = this.currencyService.code.toUpperCase()
     })
@@ -58,8 +57,6 @@ export class MainComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.currencyService.currencyPairSubject.subscribe(console.log)
-
     this.currencyService.currencyPairSubject.subscribe((data) => {
       this.currencyPairDataset = data
       const documentStyle = getComputedStyle(document.documentElement)
@@ -148,6 +145,4 @@ export class MainComponent implements OnInit, AfterViewInit {
       this.currencyService.getCurrencyPairGraph()
     })
   }
-
-
 }

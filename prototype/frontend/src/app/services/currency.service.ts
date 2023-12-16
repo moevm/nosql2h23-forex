@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { GraphData, Periods, Tickers } from '../../models/contract'
+import { ArchiveRecord, GraphData, Periods, Tickers } from '../../models/contract'
 import { Subject } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment.development'
@@ -21,7 +21,9 @@ export class CurrencyService {
   code: string
 
   availableCurrencyPairsSubject: Subject<Tickers> = new Subject<Tickers>()
+  archiveRecordSubject: Subject<ArchiveRecord> = new Subject<ArchiveRecord>()
   availablePeriods: Subject<Periods> = new Subject<Periods>()
+
 
   constructor(private httpService: HttpClient) {
   }
@@ -32,13 +34,16 @@ export class CurrencyService {
 
   getCurrencyPairGraph() {
     this.httpService.get<GraphData[]>(environment.URLS.getCurrencyPairGraph(this.code, this.dateRange.dateFrom, this.dateRange.dateTo, this.frequency)).subscribe((currencyPair) => {
-      console.log(currencyPair)
       this.currencyPairSubject.next(currencyPair)
     })
   }
 
   getAvailableCurrencyPairCodes() {
     this.httpService.get<Tickers>(environment.URLS.getAvailableCurrencyPairCodes()).subscribe((tickers) => this.availableCurrencyPairsSubject.next(tickers))
+  }
+
+  getArchiveRecords(code: string) {
+    return this.httpService.get<ArchiveRecord[]>(environment.URLS.getArchiveRecord(code)).subscribe(record => this.archiveRecordSubject.next(record[0]))
   }
 
   getAvailablePeriods() {

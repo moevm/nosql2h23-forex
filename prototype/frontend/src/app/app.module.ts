@@ -19,6 +19,7 @@ import { CalendarModule } from 'primeng/calendar'
 import { HttpClientModule } from '@angular/common/http'
 import { DatePipe } from '@angular/common'
 import { SelectButtonModule } from 'primeng/selectbutton'
+import { TableModule } from 'primeng/table'
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { SelectButtonModule } from 'primeng/selectbutton'
     BrowserModule,
     HttpClientModule,
     SelectButtonModule,
+    TableModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

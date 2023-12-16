@@ -19,5 +19,8 @@ export const environment = {
     getAvailablePeriods() {
       return `${environment.BACKEND_DOMAIN}periods`
     },
+    getArchiveRecord(code: string) {
+      return `${environment.BACKEND_DOMAIN}archive/${code.toUpperCase()}/`
+    },
   },
 }
