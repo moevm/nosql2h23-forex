@@ -1,6 +1,7 @@
 from pymongo.collection import Collection
 
 from ..sample_generation import time_periods
+from .db_connection import DB
 
 from typing import Dict, List
 from datetime import datetime, timedelta
@@ -118,11 +119,19 @@ def get_graph_data(source: Collection,
     return list(source.aggregate(pipeline))
 
 
+def get_db() -> Dict[str, Dict[str, datetime | float]]:
+
+    pair = DB.get_collection_name()
+
+    return {pair: list(DB.collection.find({}, {"_id": 0}))}
+
+
 queries = {
     "codes": get_codes,
     "periods": get_periods,
     "info": get_info,
     "summary": get_summary,
     "point": get_point,
-    "graph": get_graph_data
+    "graph": get_graph_data,
+    "export": get_db,
 }

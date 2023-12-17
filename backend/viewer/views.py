@@ -94,3 +94,11 @@ def build_graph(request: HttpRequest,
         queries["graph"](db_collection(), pair_name, start_date, end_date, frequency),
         safe=False
     )
+
+
+@require_http_methods(["GET"])
+def export(request: HttpRequest) -> JsonResponse:
+
+    return JsonResponse(
+        queries["export"]()
+    )
