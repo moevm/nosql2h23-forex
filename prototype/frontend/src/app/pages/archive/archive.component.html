@@ -1,1 +1,50 @@
-<p>archive works!</p>
+<div class="card flex justify-content-center archive-table">
+  <p-table [value]="records" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Code</th>
+        <th>From Exchange</th>
+        <th>To Exchange</th>
+        <th>Import Date</th>
+        <th>Exchange Rate Records</th>
+        <th>First Record Date</th>
+        <th>Last Record Date</th>
+      </tr>
+      <tr>
+        <th>
+          <p-columnFilter type="text" field="code"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="fromExchange"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="toExchange"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="import_date"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="exchange_rate_date"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="first_record_date"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="last_record_date"></p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-record>
+      <tr>
+        <td>{{ record.code }}</td>
+        <td>{{ record.fromExchange }}</td>
+        <td>{{ record.toExchange }}</td>
+        <td>{{ datePipe.transform(record.import_date, 'yyyy-MM-dd, hh:mm:ss') }}</td>
+        <td>{{ record.exchange_rate_records }}</td>
+        <td>{{ datePipe.transform(record.first_record_date, 'yyyy-MM-dd, hh:mm:ss') }}</td>
+        <td>{{ datePipe.transform(record.last_record_date, 'yyyy-MM-dd, hh:mm:ss') }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
