@@ -21,6 +21,8 @@ export type Code = {
 }
 
 // ['show/'] Untouched document from DB.
+// ['export/'] returns an ARRAY (!) of such objects.
+// Together they constitute the entire DB.
 export type CurrencyPair = {
   code: string;               // "USDRUB"
   fromExchange: string;       // "USD"
@@ -72,4 +74,10 @@ export type GraphData = {
   close: number;        // 107.2
   min: number;          // 102.0
   max: number;          // 120.9
+}
+
+// ['import/'] returns a status of database import operation
+export type ImportStatus = {
+  db_imported: boolean;   // True
+  errors: string;         // "" (empty string) if imported successfully
 }

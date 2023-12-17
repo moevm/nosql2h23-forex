@@ -111,7 +111,7 @@ def import_db(request: HttpRequest) -> JsonResponse:
 
     response = {
         "db_imported": False,
-        "errors": None
+        "errors": ""
     }
 
     try:
