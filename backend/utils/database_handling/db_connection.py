@@ -33,6 +33,12 @@ class DB:
 
         return DB._collection_name
 
+    @staticmethod
+    def drop() -> None:
+
+        DB.database.drop_collection(DB.get_collection_name())
+        DB.client.drop_database(DB.get_collection_name())
+
 
 def db_init() -> None:
 

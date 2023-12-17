@@ -22,6 +22,6 @@ urlpatterns = [
             r"(?P<end_date>" + date_capture + r")/(?P<frequency>[A-Za-z]{1,2}[0-9]{1,2})/$",
             views.build_graph),
 
-    path("export/", views.export)
-
+    path("export/", views.export),
+    path("import/", views.import_db)
 ]

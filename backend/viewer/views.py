@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -102,3 +104,29 @@ def export(request: HttpRequest) -> JsonResponse:
     return JsonResponse(
         queries["export"]()
     )
+
+
+@require_http_methods(["PUT"])
+def import_db(request: HttpRequest) -> JsonResponse:
+
+    response = {
+        "db_imported": False,
+        "errors": None
+    }
+
+    try:
+        data = json.loads(request.body)
+        queries["import"](data)
+
+        response["db_imported"] = True
+        return JsonResponse(
+            response
+        )
+
+    except ValueError:
+
+        response["errors"] = "Couldn't read provided data. JSON parser failed."
+
+        return JsonResponse(
+            response
+        )

@@ -1,7 +1,7 @@
 from pymongo.collection import Collection
 
 from ..sample_generation import time_periods
-from .db_connection import DB
+from .db_connection import DB, db_init
 
 from typing import Dict, List
 from datetime import datetime, timedelta
@@ -126,6 +126,18 @@ def get_db() -> Dict[str, Dict[str, datetime | float]]:
     return {pair: list(DB.collection.find({}, {"_id": 0}))}
 
 
+def set_db(data: List[Dict[str, datetime | float]]) -> None:
+
+    DB.drop()
+    db_init()
+
+    for pair in data[DB.get_collection_name()]:
+
+        DB.collection.insert_one(
+            pair
+        )
+
+
 queries = {
     "codes": get_codes,
     "periods": get_periods,
@@ -134,4 +146,5 @@ queries = {
     "point": get_point,
     "graph": get_graph_data,
     "export": get_db,
+    "import": set_db
 }
