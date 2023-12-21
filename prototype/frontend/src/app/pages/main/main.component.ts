@@ -65,7 +65,7 @@ export class MainComponent implements OnInit, AfterViewInit {
       const surfaceBorder = documentStyle.getPropertyValue('--surface-border')
 
       this.data = {
-        labels: [...this.currencyPairDataset.map(value => this.datePipe.transform(new Date(value._id), 'yyyy-MM-dd, hh:mm:ss'))],
+        labels: [...this.currencyPairDataset.map(value => this.datePipe.transform(new Date(value._id), 'dd/MM/yyyy, hh:mm:ss'))],
         datasets: [
           {
             label: 'Open',
