@@ -22,5 +22,11 @@ export const environment = {
     getArchiveRecord(code: string) {
       return `${environment.BACKEND_DOMAIN}archive/${code.toUpperCase()}/`
     },
+    importCfg() {
+      return `${environment.BACKEND_DOMAIN}import/`
+    },
+    exportCfg() {
+      return `${environment.BACKEND_DOMAIN}export/`
+    },
   },
 }

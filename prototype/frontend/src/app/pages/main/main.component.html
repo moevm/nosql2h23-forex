@@ -6,13 +6,23 @@
     <form [formGroup]="dateFormGroup">
       <div>
         Date From:
-        <p-calendar [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true"
-                    formControlName="dateFrom"></p-calendar>
+        <p-calendar
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          [readonlyInput]="true"
+          formControlName="dateFrom"
+          dateFormat="dd/mm/yy"
+        />
       </div>
       <div>
         Date To:
-        <p-calendar [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true"
-                    formControlName="dateTo"></p-calendar>
+        <p-calendar
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          [readonlyInput]="true"
+          formControlName="dateTo"
+          dateFormat="dd/mm/yy"
+        />
       </div>
     </form>
   </div>

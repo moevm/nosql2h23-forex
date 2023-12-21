@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { ArchiveRecord, GraphData, Periods, Tickers } from '../../models/contract'
-import { Subject } from 'rxjs'
+import { ArchiveRecord, GraphData, ImportStatus, Periods, Tickers } from '../../models/contract'
+import { Observable, Subject } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../environments/environment.development'
 
@@ -65,6 +65,19 @@ export class CurrencyService {
   setCode(code: string) {
     this.code = code
   }
+
+  importCfg(fileToImport: File): Observable<ImportStatus> {
+    const formData = new FormData()
+    formData.append('file', fileToImport)
+
+    return this.httpService.put<ImportStatus>(environment.URLS.importCfg(), { formData })
+  }
+
+  exportCfg(): Observable<any> {
+    return this.httpService.get(environment.URLS.exportCfg(), { observe: 'response', responseType: 'blob' })
+  }
+
+
 
 
 }

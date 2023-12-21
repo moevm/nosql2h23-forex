@@ -3,10 +3,13 @@ import json
 from django.shortcuts import render
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 
 from utils import create_db, db_validate, db_collection, queries
 
 from pymongo.errors import DocumentTooLarge
+
+from utils.database_handling.db_connection import DB
 
 
 # Create your views here.
@@ -100,12 +103,11 @@ def build_graph(request: HttpRequest,
 
 @require_http_methods(["GET"])
 def export(request: HttpRequest) -> JsonResponse:
-
     return JsonResponse(
         queries["export"]()
     )
 
-
+@csrf_exempt
 @require_http_methods(["PUT"])
 def import_db(request: HttpRequest) -> JsonResponse:
 
@@ -116,7 +118,8 @@ def import_db(request: HttpRequest) -> JsonResponse:
 
     try:
         data = json.loads(request.body)
-        queries["import"](data)
+        queries["import"](data[DB.get_collection_name()])
+
 
         response["db_imported"] = True
         return JsonResponse(
@@ -124,9 +127,11 @@ def import_db(request: HttpRequest) -> JsonResponse:
         )
 
     except ValueError:
-
         response["errors"] = "Couldn't read provided data. JSON parser failed."
 
         return JsonResponse(
             response
         )
+
+    except KeyError:
+       return JsonResponse(json.loads(request.body))
