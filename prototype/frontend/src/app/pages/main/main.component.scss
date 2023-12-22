@@ -1,0 +1,30 @@
+.chart {
+  display: flex;
+  flex-direction: column;
+  padding: 8vw;
+}
+
+
+.date-range {
+  padding-left: 5vw;
+
+  & * {
+    padding: 1vw 1vw 1vw 0;
+
+  }
+
+  & form {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+.upper-menu {
+  display: flex;
+
+  & .select-period {
+    padding-top: 9.5vh;
+    padding-left: 10vw;
+
+  }
+}
