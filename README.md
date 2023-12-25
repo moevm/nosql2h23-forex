@@ -1,6 +1,5 @@
 # nosql_template
 
-
 ## Hello world demo
 [Ссылка](https://drive.google.com/drive/folders/1CzjmR7G4wDPlhW5vfwzyfimZQExe9u9W?usp=drive_link)
 
