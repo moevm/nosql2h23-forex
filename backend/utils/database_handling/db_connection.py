@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from pymongo.collection import Collection
+from .db_data_connection import create_db
 
 
 class DB:
@@ -45,6 +46,8 @@ def db_init() -> None:
     DB.client = MongoClient(DB.get_connection_name())
     DB.database = DB.client[DB.get_db_name()]
     DB.collection = DB.database[DB.get_collection_name()]
+
+    create_db()
 
 
 def db_collection() -> Collection:

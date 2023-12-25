@@ -24,20 +24,10 @@ def index(request) -> JsonResponse:
              "Generated": False}
         )
 
-    try:
-        create_db()
-
-        return JsonResponse(
-            {"DB is up": True,
-             "Generated": True}
-        )
-
-    except DocumentTooLarge:
-
-        return JsonResponse(
-            {"DB is up": False,
-             "Generated": False}
-        )
+    return JsonResponse(
+                {"DB is up": True,
+                 "Generated": True}
+            )
 
 
 @require_http_methods(["GET"])
