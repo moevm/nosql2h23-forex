@@ -4,7 +4,7 @@ from pymongo.collection import Collection
 
 class DB:
 
-    _connection_url = "mongodb://localhost:27017"
+    _connection_url = "mongodb://nosql_database:27017"
 
     _db_name = "Forex"
 

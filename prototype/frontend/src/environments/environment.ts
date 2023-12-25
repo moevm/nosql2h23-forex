@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
 
-  BACKEND_DOMAIN: 'http://localhost:8000/viewer/',
+  BACKEND_DOMAIN: 'http://nosql_backend:8000/viewer/',
 
   URLS: {
     getCurrencyPairInfo(code: string) {

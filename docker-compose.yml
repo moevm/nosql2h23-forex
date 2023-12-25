@@ -1,0 +1,22 @@
+services:
+  db:
+    container_name: nosql_database
+    build: ./Database/
+    ports:
+      - 27017:27017
+  backend:
+    container_name: nosql_backend
+    build: ./backend/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  frontend:
+    container_name: nosql_frontend
+    build: ./prototype/frontend/
+    volumes:
+      - ./prototype/frontend/apache_conf/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+    ports:
+      - 8080:80
+    depends_on:
+      - backend
