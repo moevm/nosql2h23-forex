@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { ArchiveRecord, GraphData, ImportStatus, Periods, Tickers } from '../../models/contract'
+import { ArchiveRecord, DBStatus, GraphData, ImportStatus, Periods, Tickers } from '../../models/contract'
 import { Observable, Subject } from 'rxjs'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { environment } from '../../environments/environment.development'
@@ -28,9 +28,17 @@ export class CurrencyService {
   constructor(private httpService: HttpClient) {
   }
 
-  //getCurrencyPairInfo(code: string) {
-  //  this.httpService.get<CurrencyPair>(environment.URLS.getCurrencyPairInfo(code)).subscribe((currencyPair) => this.currencyPairSubject.next(currencyPair))
-  //}
+  bootstrapApp() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+      }),
+    }
+
+    return this.httpService.get<DBStatus>(environment.URLS.bootstrapApp(), httpOptions).subscribe(dbStatus => {
+      console.log(dbStatus)
+    })
+  }
 
   getCurrencyPairGraph() {
 

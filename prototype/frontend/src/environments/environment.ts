@@ -4,6 +4,9 @@ export const environment = {
   BACKEND_DOMAIN: 'http://nosql_backend:8000/viewer/',
 
   URLS: {
+    bootstrapApp() {
+      return environment.BACKEND_DOMAIN
+    },
     getCurrencyPairInfo(code: string) {
       return `${environment.BACKEND_DOMAIN}show/${code.toUpperCase()}`
     },
